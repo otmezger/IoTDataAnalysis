@@ -25,5 +25,6 @@ else
     for iFile =1:length(myFiles)
         data = importJSONFile(iFile,locationID,myFiles);
         MachineData{iFile} =data;
+        % MachineData{iFile}.chiller = ChillerMachine(<ObjetoTPoint_TempCaliente>,<ObjetoTPoint_TempAmbiente>,'name','Chiller 4','cold',<ObjetoTPoint_TempFrio>);
     end %looping over files
 end
