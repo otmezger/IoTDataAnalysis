@@ -1,7 +1,7 @@
 
 %% settings
 path(path,'./Classes');
-locationID = 'Z8Ksof1rzm';
+locationID = '1U97q8qaPi';
 enableParalellProcesing = true; % not sure if this needs to be. 
 %% configure paralell toolbox. 
 if enableParalellProcesing
@@ -14,7 +14,7 @@ if enableParalellProcesing
 end
 %% get files
 disp('ok. lets try it')
-myFiles = dir(strcat('./exportParse/exportLocation_', locationID,'/export*'));
+myFiles = dir(strcat('../parseDownloader/exportParse/exportLocation_', locationID,'/export*'));
 MachineData = cell(length(myFiles),1);
 if enableParalellProcesing 
     parfor iFile =1:length(myFiles)
@@ -28,3 +28,20 @@ else
         % MachineData{iFile}.chiller = ChillerMachine(<ObjetoTPoint_TempCaliente>,<ObjetoTPoint_TempAmbiente>,'name','Chiller 4','cold',<ObjetoTPoint_TempFrio>);
     end %looping over files
 end
+
+%% process
+Machines = {};
+for i=1:1:length(MachineData)
+    thisMachine = processMachineData(MachineData{i});
+    if isempty(thisMachine)
+        %discard this "machine"
+    else
+        % a real machine, we got real data
+
+        Machines{end+1} = thisMachine; %#ok<SAGROW>
+        if isfield(thisMachine,'chiller')
+            thisMachine.chiller.exportOnOffEvents();
+        end
+    end
+end
+system('say done with matlab.')
