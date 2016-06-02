@@ -79,7 +79,9 @@ classdef TPoint %< Point
                         obj.cycleSide = 'cold';
                     elseif strcmp(obj.location(1:4),'warm')
                         obj.cycleSide = 'warm';
-                    elseif strcmp(obj.location(1:7),'outside')
+                    elseif strcmp(obj.location(1:4),'airI')
+                        obj.cycleSide = 'outside';
+                    elseif strcmp(obj.location(1:3),'out')
                         obj.cycleSide = 'outside';
                     else
                         obj.cycleSide = 'undefined';

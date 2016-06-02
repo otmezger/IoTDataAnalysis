@@ -40,7 +40,7 @@ for i=1:1:length(MachineData)
 
         Machines{end+1} = thisMachine; %#ok<SAGROW>
         if isfield(thisMachine,'chiller')
-            thisMachine.chiller.exportOnOffEvents();
+            %thisMachine.chiller.exportOnOffEvents();
         end
     end
 end
