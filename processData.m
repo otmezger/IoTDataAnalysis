@@ -31,6 +31,10 @@ end
 
 %% process
 Machines = {};
+MachineData{2}.sensors.sensor_ZDMOFZUCNN = MachineData{4}.sensors.sensor_ZDMOFZUCNN;
+MachineData{2}.sensors.sensor_P9Vspkw3Gh = MachineData{1}.sensors.sensor_P9Vspkw3Gh;
+MachineData{3}.sensors.sensor_sAEOCSFNer = MachineData{4}.sensors.sensor_sAEOCSFNer;
+MachineData{3}.sensors.sensor_ZDMOFZUCNN = MachineData{4}.sensors.sensor_ZDMOFZUCNN;
 for i=1:1:length(MachineData)
     thisMachine = processMachineData(MachineData{i});
     if isempty(thisMachine)
@@ -44,4 +48,4 @@ for i=1:1:length(MachineData)
         end
     end
 end
-system('say done with matlab.')
+%system('say done with matlab.')

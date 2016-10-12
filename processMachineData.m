@@ -12,6 +12,7 @@ else
     for iSensor =1:1:length(thisMachineSensorFieldNames)
         thisSensorFielName = thisMachineSensorFieldNames{iSensor};
         tPoint = TPoint(R.sensors.(thisSensorFielName),1);
+        %tPoint.cycleSide = 'cold';  %Linea agregada
         switch tPoint.cycleSide
             case 'cold'
                 tPoint_cold = tPoint;
