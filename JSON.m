@@ -10,21 +10,19 @@ classdef JSON < handle
     
     % Copyright 2013 The MathWorks, Inc.
     
-    properties (Access = private)
+    properties (Access = private) % gives access by class members only  
         json % the string
         index % position in the string
     end
     
     
-    methods (Access = private)
-        
+    methods (Access = private) % gives access by class methods only
         function this = JSON(JSONstring)
             this.json = JSONstring;
             this.index = 1;
         end
         
-        function value = getValue(this)
-            % get the next value in the string
+        function value = getValue(this) % divides the JSON string into different variables, by detecting parenthesis and key words
             [token,tokenType] = this.getNextToken;
             value = token;
             
@@ -37,7 +35,7 @@ classdef JSON < handle
             end
         end
         
-        function array = getArray(this)
+        function array = getArray(this) % saves the data into Matlab arrays
             % an array is [ value, ... ]
             array = {};
             
@@ -54,7 +52,7 @@ classdef JSON < handle
                 elseif strcmp(value,']')
                     continue
                 else
-                    error('JSON parser requires commas between array elements');
+                    error('JSON parser requires commas between array elements'); % identifies if JSON file format is incorrect
                 end
             end
             
@@ -65,7 +63,7 @@ classdef JSON < handle
             end
         end
         
-        function obj = getObject(this)
+        function obj = getObject(this) % identifies object files and stores them in Matlab files
             % an object is { string : value, ... }
             obj = struct;
             value = this.getValue;
@@ -98,7 +96,7 @@ classdef JSON < handle
                 elseif strcmp(value,'}')
                     continue
                 else
-                    error('JSON parser requires commas between object elements');
+                    error('JSON parser requires commas between object elements'); % identifies if JSON file format is incorrect
                 end
             end
             
@@ -194,7 +192,7 @@ classdef JSON < handle
                 this.index = last + 1; % skip the trailing "
             end
             
-            function number = getNumber(this)
+            function number = getNumber(this) % identifies numbers and stores them into Matlab files
                 first = this.index;
                 last = first;
                 ch = charAt(this,first);

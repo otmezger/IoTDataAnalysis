@@ -2,7 +2,7 @@ classdef TPoint %< Point
     %TPOINT Temperature Meassurement Point
     %   A single measurement point.
     
-    properties
+    properties %define the properties of Tpoint
         sensorID
         sensorType
         R
@@ -23,7 +23,7 @@ classdef TPoint %< Point
     end 
     
     methods
-        function obj = TPoint(object,figurenr)
+        function obj = TPoint(object,figurenr) %Function creates the object Tpoint
             % initialization
             if nargin > 0
                 obj.R = object;
@@ -91,7 +91,7 @@ classdef TPoint %< Point
             end
         end % end of initialization
         
-        function h = doPlot(obj)
+        function h = doPlot(obj)% Function to plot results
             h = struct;
             h.fig = figure(obj.figureNumber);
             clf
@@ -108,7 +108,7 @@ classdef TPoint %< Point
             
             
         end % end of doplot
-        function descriptionString = getDescription(obj,kind)
+        function descriptionString = getDescription(obj,kind) %Function to make a description of the point
             switch kind
                 case 'title'
                     descriptionString = strcat([obj.kind ' de '  obj.location  ' en '  obj.unit]);
@@ -126,7 +126,7 @@ classdef TPoint %< Point
             % this function analyses the data. 
             
         end
-        function dT = getdT(obj)
+        function dT = getdT(obj)%Function to dc filter, use a transfer function, to minimize noise
             dT = zeros(size(obj.tnorm));
             dT(2:end) = obj.ynorm(2:end) - obj.ynorm(1:end-1);
             % let's filter dT a bit
@@ -137,7 +137,7 @@ classdef TPoint %< Point
             dT = filter(b,a,dT);
         end
         
-        function [tnorm,ynorm] = normalize(obj)
+        function [tnorm,ynorm] = normalize(obj) % This function normalize the data, using the characteristics listed below
             dt_seg = int32((obj.endDate - obj.startDate) * 60*60*24);
             jota = 1;
             firstDateRaw = obj.startDate;

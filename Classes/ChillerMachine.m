@@ -18,8 +18,12 @@ classdef ChillerMachine
     
     methods
         %% -- constructor
-        function obj = ChillerMachine(warm,outside,varargin)
+        function obj = ChillerMachine(warm,outside,varargin)   %Defines required and optional inputs, assigns defaults to optional inputs
+            
+            %Create an InputParser object
             p = inputParser; % from http://www.mathworks.com/help/matlab/matlab_prog/parse-function-inputs.html
+            
+            %Adds inputs to the scheme
             addRequired(p,'warm',@isobject);
             addRequired(p,'outside',@isobject);
             
@@ -29,10 +33,12 @@ classdef ChillerMachine
             %addOptional(p,'amperaje',@isobject);
             %addOptional(p,'potencia',@isobject);
             
+            %Set properties to adjust parsing
             p.KeepUnmatched = true;
             
-            parse(p,warm,outside,varargin{:})
-            if ~isempty(p.Results)
+            %Parse the inputs
+            parse(p,warm,outside,varargin{:})                       
+            if ~isempty(p.Results)  %Use the inputs in your function
                 if isfield(p.Results,'cold')
                     obj.cold= p.Results.cold;
                 end
@@ -47,6 +53,10 @@ classdef ChillerMachine
             obj.warm= warm;
             obj.outside = outside;
             
+            %Assigns the minimun value to obj.warm and obj.outside
+            %(startDate_)
+            %Assigns the maximum value to obj.warm and obj.outside
+            %(endDate_)
             startDate_ = [
                 min(obj.warm.tnorm),...
                 min(obj.outside.tnorm),...
@@ -56,6 +66,7 @@ classdef ChillerMachine
                 max(obj.outside.tnorm),...
                 ];
             
+            %Sets startDate and endDate for the object
             obj.startDate = max(startDate_);
             obj.endDate = min(endDate_);
             
@@ -65,7 +76,7 @@ classdef ChillerMachine
             
         end % end of initialization
         %% -- doPlot
-        function h=doPlot(obj)
+        function h=doPlot(obj) %Graphs the T_compressor, T_outside and T_warm/T_cold as a function of time
             tmin = obj.warm.startDate;
             tmax = obj.warm.endDate;
             h = struct;
@@ -106,7 +117,7 @@ classdef ChillerMachine
         end % end of doPlot
        
         %% -- powerAnalysis
-        function h = powerAnalysis(obj,figNr)
+        function h = powerAnalysis(obj,figNr) %Analysis of optional properties: current, power, voltage (in case of used). Graphs this three variables. 
             h = struct;
             h.fig = figure(figNr);
             clf
